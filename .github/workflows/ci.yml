@@ -1,0 +1,43 @@
+---
+name: CI
+
+on:
+  - push
+
+jobs:
+  formatting-and-quality:
+    name: Formatting and Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup
+        run: |
+          rustup component add clippy rustfmt
+
+      - name: Format
+        run: cargo fmt -- --check
+
+      - name: Clippy
+        run: cargo clippy -- -Dwarnings
+
+  documentation:
+    name: Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: rustdoc
+        run: cargo doc
+
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build and Test
+        run: cargo test
