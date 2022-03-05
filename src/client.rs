@@ -3,7 +3,7 @@ use anyhow::{anyhow, Result};
 use reqwest::{StatusCode, Url};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct ClientConfig {
     pub api_url: Url,
 }
@@ -16,7 +16,7 @@ impl Default for ClientConfig {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Client {
     client: reqwest::Client,
     username: String,
