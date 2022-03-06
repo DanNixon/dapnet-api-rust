@@ -150,7 +150,7 @@ impl Client {
     }
 
     pub async fn get_transmitter_group(&self, name: &str) -> Result<Option<TransmitterGroup>> {
-        Ok(self.get(&format!("transmitterGroup/{}", name)).await?)
+        Ok(self.get(&format!("transmitterGroups/{}", name)).await?)
     }
 
     pub async fn get_all_rubrics(&self) -> Result<Option<Vec<Rubric>>> {
