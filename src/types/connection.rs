@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::net::IpAddr;
+use std::{fmt, net::IpAddr};
 
 #[derive(Debug, Deserialize)]
 pub struct Connection {
@@ -8,4 +8,10 @@ pub struct Connection {
     pub ip: IpAddr,
 
     pub port: u64,
+}
+
+impl fmt::Display for Connection {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}:{}", self.ip, self.port)
+    }
 }
