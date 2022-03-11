@@ -92,11 +92,11 @@ impl Client {
     }
 
     pub async fn get_statistics(&self) -> Result<Option<Statistics>> {
-        Ok(self.get("stats").await?)
+        self.get("stats").await
     }
 
     pub async fn get_calls_by(&self, owner: &str) -> Result<Option<Vec<Call>>> {
-        Ok(self.get_many(&format!("calls?ownerName={}", owner)).await?)
+        self.get_many(&format!("calls?ownerName={}", owner)).await
     }
 
     /// Sends a new call/message.
@@ -122,43 +122,43 @@ impl Client {
     }
 
     pub async fn get_all_nodes(&self) -> Result<Option<Vec<Node>>> {
-        Ok(self.get_many("nodes").await?)
+        self.get_many("nodes").await
     }
 
     pub async fn get_node(&self, name: &str) -> Result<Option<Node>> {
-        Ok(self.get(&format!("nodes/{}", name)).await?)
+        self.get(&format!("nodes/{}", name)).await
     }
 
     pub async fn get_all_callsigns(&self) -> Result<Option<Vec<Callsign>>> {
-        Ok(self.get_many("callsigns").await?)
+        self.get_many("callsigns").await
     }
 
     pub async fn get_callsign(&self, name: &str) -> Result<Option<Callsign>> {
-        Ok(self.get(&format!("callsigns/{}", name)).await?)
+        self.get(&format!("callsigns/{}", name)).await
     }
 
     pub async fn get_all_transmitters(&self) -> Result<Option<Vec<Transmitter>>> {
-        Ok(self.get_many("transmitters").await?)
+        self.get_many("transmitters").await
     }
 
     pub async fn get_transmitter(&self, name: &str) -> Result<Option<Transmitter>> {
-        Ok(self.get(&format!("transmitters/{}", name)).await?)
+        self.get(&format!("transmitters/{}", name)).await
     }
 
     pub async fn get_all_transmitter_groups(&self) -> Result<Option<Vec<TransmitterGroup>>> {
-        Ok(self.get_many("transmitterGroups").await?)
+        self.get_many("transmitterGroups").await
     }
 
     pub async fn get_transmitter_group(&self, name: &str) -> Result<Option<TransmitterGroup>> {
-        Ok(self.get(&format!("transmitterGroups/{}", name)).await?)
+        self.get(&format!("transmitterGroups/{}", name)).await
     }
 
     pub async fn get_all_rubrics(&self) -> Result<Option<Vec<Rubric>>> {
-        Ok(self.get_many("rubrics").await?)
+        self.get_many("rubrics").await
     }
 
     pub async fn get_rubric(&self, name: &str) -> Result<Option<Rubric>> {
-        Ok(self.get(&format!("rubrics/{}", name)).await?)
+        self.get(&format!("rubrics/{}", name)).await
     }
 
     pub async fn get_news(&self, name: &str) -> Result<Option<Vec<News>>> {
