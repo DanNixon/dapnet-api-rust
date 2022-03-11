@@ -12,19 +12,19 @@
 //!
 //! #[tokio::main]
 //! async fn main() {
-//!   let client = Client::new("m0nxn", "my_super_secret_password");
+//!     let client = Client::new("m0nxn", "my_super_secret_password");
 //!
-//!   client
-//!       .new_call(&Call::new(
-//!           "M0NXN: this is a test".to_string(),
-//!           vec!["m0nxn".to_string()],
-//!           vec!["uk-all".to_string()],
-//!       ))
-//!       .await
-//!       .unwrap();
+//!     client
+//!         .new_call(&Call::new(
+//!             "M0NXN: this is a test".to_string(),
+//!             vec!["m0nxn".to_string()],
+//!             vec!["uk-all".to_string()],
+//!         ))
+//!         .await
+//!         .unwrap();
 //!
-//!   let calls = client.get_calls_by("m0nxn").await.unwrap();
-//!   println!("calls: {:?}", calls);
+//!     let calls = client.get_calls_by("m0nxn").await.unwrap();
+//!     println!("calls: {:?}", calls);
 //! }
 //! ```
 
