@@ -161,8 +161,14 @@ impl Client {
         Ok(self.get(&format!("rubrics/{}", name)).await?)
     }
 
-    pub async fn get_news(&self, _rubric: Option<Rubric>) {
-        // TODO
+    pub async fn get_news(&self, name: &str) -> Result<Option<Vec<News>>> {
+        match self
+            .get_many::<Option<News>>(&format!("news?rubricName={}", name))
+            .await?
+        {
+            Some(v) => Ok(Some(v.into_iter().flatten().collect())),
+            None => Ok(None),
+        }
     }
 
     /// Sends news to a rubric.
