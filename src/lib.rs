@@ -33,5 +33,5 @@ mod types;
 
 pub use client::Client;
 pub use types::{
-    Call, Callsign, Connection, Node, Rubric, Statistics, Transmitter, TransmitterGroup,
+    Call, Callsign, Connection, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup,
 };

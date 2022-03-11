@@ -1,4 +1,4 @@
-use crate::{Call, Callsign, Node, Rubric, Statistics, Transmitter, TransmitterGroup};
+use crate::{Call, Callsign, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup};
 use anyhow::{anyhow, Result};
 use reqwest::{StatusCode, Url};
 use serde::{Deserialize, Serialize};
@@ -163,5 +163,26 @@ impl Client {
 
     pub async fn get_news(&self, _rubric: Option<Rubric>) {
         // TODO
+    }
+
+    /// Sends news to a rubric.
+    ///
+    /// Example:
+    /// ```no_run
+    /// # use dapnet_api::{Client, News};
+    /// # #[tokio::main]
+    /// # async fn main() {
+    /// # let client = Client::new("m0nxn", "my_super_secret_password");
+    /// client
+    ///     .new_news(&News::new(
+    ///         "some_rubric_name".to_string(),
+    ///         "M0NXN: this is a test".to_string(),
+    ///     ))
+    ///     .await
+    ///     .unwrap();
+    /// # }
+    /// ```
+    pub async fn new_news(&self, news: &News) -> Result<()> {
+        self.post("news", news).await
     }
 }
