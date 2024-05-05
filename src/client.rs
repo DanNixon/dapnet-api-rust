@@ -1,7 +1,7 @@
 use crate::{Call, Callsign, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup};
-use anyhow::{anyhow, Result};
-use reqwest::{StatusCode, Url};
+use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
+use url::Url;
 
 #[derive(Clone, Debug)]
 pub struct ClientConfig {
@@ -41,7 +41,7 @@ impl Client {
         }
     }
 
-    async fn get<T: for<'de> Deserialize<'de>>(&self, path: &str) -> Result<Option<T>> {
+    async fn get<T: for<'de> Deserialize<'de>>(&self, path: &str) -> crate::Result<Option<T>> {
         let result = self
             .client
             .get(self.config.api_url.join(path)?)
@@ -54,11 +54,14 @@ impl Client {
         } else if result.status() == StatusCode::NOT_FOUND {
             Ok(None)
         } else {
-            Err(anyhow! {"API error: {}", result.status()})
+            Err(crate::Error::ApiError(result.status()))
         }
     }
 
-    async fn get_many<T: for<'de> Deserialize<'de>>(&self, path: &str) -> Result<Option<Vec<T>>> {
+    async fn get_many<T: for<'de> Deserialize<'de>>(
+        &self,
+        path: &str,
+    ) -> crate::Result<Option<Vec<T>>> {
         let result = self
             .client
             .get(self.config.api_url.join(path)?)
@@ -71,11 +74,11 @@ impl Client {
         } else if result.status() == StatusCode::NOT_FOUND {
             Ok(None)
         } else {
-            Err(anyhow! {"API error: {}", result.status()})
+            Err(crate::Error::ApiError(result.status()))
         }
     }
 
-    async fn post<T: Serialize + ?Sized>(&self, path: &str, item: &T) -> Result<()> {
+    async fn post<T: Serialize + ?Sized>(&self, path: &str, item: &T) -> crate::Result<()> {
         let result = self
             .client
             .post(self.config.api_url.join(path)?)
@@ -87,15 +90,15 @@ impl Client {
         if result.status().is_success() {
             Ok(())
         } else {
-            Err(anyhow! {"API error: {}", result.status()})
+            Err(crate::Error::ApiError(result.status()))
         }
     }
 
-    pub async fn get_statistics(&self) -> Result<Option<Statistics>> {
+    pub async fn get_statistics(&self) -> crate::Result<Option<Statistics>> {
         self.get("stats").await
     }
 
-    pub async fn get_calls_by(&self, owner: &str) -> Result<Option<Vec<Call>>> {
+    pub async fn get_calls_by(&self, owner: &str) -> crate::Result<Option<Vec<Call>>> {
         self.get_many(&format!("calls?ownerName={}", owner)).await
     }
 
@@ -117,51 +120,54 @@ impl Client {
     ///     .unwrap();
     /// # }
     /// ```
-    pub async fn new_call(&self, call: &Call) -> Result<()> {
+    pub async fn new_call(&self, call: &Call) -> crate::Result<()> {
         self.post("calls", call).await
     }
 
-    pub async fn get_all_nodes(&self) -> Result<Option<Vec<Node>>> {
+    pub async fn get_all_nodes(&self) -> crate::Result<Option<Vec<Node>>> {
         self.get_many("nodes").await
     }
 
-    pub async fn get_node(&self, name: &str) -> Result<Option<Node>> {
+    pub async fn get_node(&self, name: &str) -> crate::Result<Option<Node>> {
         self.get(&format!("nodes/{}", name)).await
     }
 
-    pub async fn get_all_callsigns(&self) -> Result<Option<Vec<Callsign>>> {
+    pub async fn get_all_callsigns(&self) -> crate::Result<Option<Vec<Callsign>>> {
         self.get_many("callsigns").await
     }
 
-    pub async fn get_callsign(&self, name: &str) -> Result<Option<Callsign>> {
+    pub async fn get_callsign(&self, name: &str) -> crate::Result<Option<Callsign>> {
         self.get(&format!("callsigns/{}", name)).await
     }
 
-    pub async fn get_all_transmitters(&self) -> Result<Option<Vec<Transmitter>>> {
+    pub async fn get_all_transmitters(&self) -> crate::Result<Option<Vec<Transmitter>>> {
         self.get_many("transmitters").await
     }
 
-    pub async fn get_transmitter(&self, name: &str) -> Result<Option<Transmitter>> {
+    pub async fn get_transmitter(&self, name: &str) -> crate::Result<Option<Transmitter>> {
         self.get(&format!("transmitters/{}", name)).await
     }
 
-    pub async fn get_all_transmitter_groups(&self) -> Result<Option<Vec<TransmitterGroup>>> {
+    pub async fn get_all_transmitter_groups(&self) -> crate::Result<Option<Vec<TransmitterGroup>>> {
         self.get_many("transmitterGroups").await
     }
 
-    pub async fn get_transmitter_group(&self, name: &str) -> Result<Option<TransmitterGroup>> {
+    pub async fn get_transmitter_group(
+        &self,
+        name: &str,
+    ) -> crate::Result<Option<TransmitterGroup>> {
         self.get(&format!("transmitterGroups/{}", name)).await
     }
 
-    pub async fn get_all_rubrics(&self) -> Result<Option<Vec<Rubric>>> {
+    pub async fn get_all_rubrics(&self) -> crate::Result<Option<Vec<Rubric>>> {
         self.get_many("rubrics").await
     }
 
-    pub async fn get_rubric(&self, name: &str) -> Result<Option<Rubric>> {
+    pub async fn get_rubric(&self, name: &str) -> crate::Result<Option<Rubric>> {
         self.get(&format!("rubrics/{}", name)).await
     }
 
-    pub async fn get_news(&self, name: &str) -> Result<Option<Vec<News>>> {
+    pub async fn get_news(&self, name: &str) -> crate::Result<Option<Vec<News>>> {
         match self
             .get_many::<Option<News>>(&format!("news?rubricName={}", name))
             .await?
@@ -188,7 +194,7 @@ impl Client {
     ///     .unwrap();
     /// # }
     /// ```
-    pub async fn new_news(&self, news: &News) -> Result<()> {
+    pub async fn new_news(&self, news: &News) -> crate::Result<()> {
         self.post("news", news).await
     }
 }
