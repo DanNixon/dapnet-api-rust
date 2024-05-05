@@ -16,33 +16,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v10
 
-      - name: Setup
-        run: |
-          rustup component add clippy rustfmt
+      # Evaluate the devshell here so that the time reported for subsequent
+      # steps that use it reflect what is actually done there.
+      - name: Evaluate devshell
+        run: nix develop
 
       - name: Format
-        run: cargo fmt -- --check
+        run: nix develop --command treefmt --fail-on-change
+
+      - name: cargo-deny
+        run: nix develop --command cargo deny check
 
       - name: Clippy
-        run: cargo clippy -- -Dwarnings
+        run: nix develop --command cargo clippy --all-targets -- -D warnings
 
-  documentation:
-    name: Documentation
-    runs-on: ubuntu-latest
+      - name: Tests
+        run: nix develop --command cargo test
 
-    steps:
-      - uses: actions/checkout@v4
+      - name: Documentation
+        run: nix develop --command cargo doc
 
-      - name: rustdoc
-        run: cargo doc
-
-  build-and-test:
-    name: Build and Test
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build and Test
-        run: cargo test
+      - name: Build examples
+        run: nix develop --command cargo build --examples
