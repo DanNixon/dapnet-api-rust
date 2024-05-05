@@ -29,9 +29,13 @@
 //! ```
 
 mod client;
+mod error;
 mod types;
 
-pub use client::Client;
-pub use types::{
-    Call, Callsign, Connection, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup,
+pub use crate::{
+    client::Client,
+    error::{Error, Result},
+    types::{
+        Call, Callsign, Connection, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup,
+    },
 };
