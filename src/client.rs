@@ -109,16 +109,18 @@ impl Client {
     ///
     /// Example:
     /// ```no_run
-    /// # use dapnet_api::{OutgoingCall, Client};
+    /// # use dapnet_api::{Client, OutgoingCallBuilder};
     /// # #[tokio::main]
     /// # async fn main() {
     /// # let client = Client::new("m0nxn", "my_super_secret_password");
     /// client
-    ///     .new_call(&OutgoingCall::new(
-    ///         "M0NXN: this is a test".to_string(),
-    ///         vec!["m0nxn".to_string()],
-    ///         vec!["uk-all".to_string()],
-    ///     ))
+    ///     .new_call(&OutgoingCallBuilder::default()
+    ///         .text("M0NXN: this is a test".to_string())
+    ///         .recipients(vec!["m0nxn".to_string()])
+    ///         .transmitter_groups(vec!["uk-all".to_string()])
+    ///         .build()
+    ///         .unwrap()
+    ///     )
     ///     .await
     ///     .unwrap();
     /// # }
@@ -184,15 +186,17 @@ impl Client {
     ///
     /// Example:
     /// ```no_run
-    /// # use dapnet_api::{Client, OutgoingNews};
+    /// # use dapnet_api::{Client, OutgoingNewsBuilder};
     /// # #[tokio::main]
     /// # async fn main() {
     /// # let client = Client::new("m0nxn", "my_super_secret_password");
     /// client
-    ///     .new_news(&OutgoingNews::new(
-    ///         "some_rubric_name".to_string(),
-    ///         "M0NXN: this is a test".to_string(),
-    ///     ))
+    ///     .new_news(&OutgoingNewsBuilder::default()
+    ///         .rubric("some_rubric_name".to_string())
+    ///         .text("M0NXN: this is a test".to_string())
+    ///         .build()
+    ///         .unwrap()
+    ///     )
     ///     .await
     ///     .unwrap();
     /// # }
