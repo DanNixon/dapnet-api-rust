@@ -1,35 +1,26 @@
 use chrono::{DateTime, Utc};
+use derive_builder::Builder;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Serialize, Builder)]
 pub struct OutgoingCall {
     /// Message text of the call
-    pub text: String,
+    pub(crate) text: String,
 
     /// Call signs of this calls recipients
     #[serde(rename = "callSignNames")]
-    pub recipients: Vec<String>,
+    pub(crate) recipients: Vec<String>,
 
     /// Names of transmitter groups used to transmit this call
     #[serde(rename = "transmitterGroupNames")]
-    pub transmitter_groups: Vec<String>,
+    pub(crate) transmitter_groups: Vec<String>,
 
     /// Flag indicating if this call was sent with high priority
-    pub emergency: bool,
+    #[builder(default = "false")]
+    pub(crate) emergency: bool,
 }
 
-impl OutgoingCall {
-    pub fn new(text: String, recipients: Vec<String>, transmitter_groups: Vec<String>) -> Self {
-        Self {
-            text,
-            recipients,
-            transmitter_groups,
-            emergency: false,
-        }
-    }
-}
-
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize)]
 pub struct Call {
     /// Message text of the call
     pub text: String,

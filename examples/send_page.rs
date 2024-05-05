@@ -1,4 +1,4 @@
-use dapnet_api::{Client, OutgoingCall};
+use dapnet_api::{Client, OutgoingCallBuilder};
 
 #[tokio::main]
 async fn main() {
@@ -8,11 +8,14 @@ async fn main() {
     let client = Client::new(&username, &password);
 
     client
-        .new_call(&OutgoingCall::new(
-            format!("{username}: this is a test"),
-            vec![username.clone()],
-            vec!["uk-all".to_string()],
-        ))
+        .new_call(
+            &OutgoingCallBuilder::default()
+                .text(format!("{username}: this is a test"))
+                .recipients(vec![username.clone()])
+                .transmitter_groups(vec!["uk-all".to_string()])
+                .build()
+                .unwrap(),
+        )
         .await
         .unwrap();
 

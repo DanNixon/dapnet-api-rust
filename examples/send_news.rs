@@ -1,4 +1,4 @@
-use dapnet_api::{Client, OutgoingNews};
+use dapnet_api::{Client, OutgoingNewsBuilder};
 
 #[tokio::main]
 async fn main() {
@@ -9,10 +9,13 @@ async fn main() {
     let client = Client::new(&username, &password);
 
     client
-        .new_news(&OutgoingNews::new(
-            rubric_name.clone(),
-            format!("{username}: this is a test"),
-        ))
+        .new_news(
+            &OutgoingNewsBuilder::default()
+                .rubric(rubric_name.clone())
+                .text(format!("{username}: this is a test"))
+                .build()
+                .unwrap(),
+        )
         .await
         .unwrap();
 
