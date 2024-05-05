@@ -4,29 +4,8 @@
 //! and [here](https://hampager.de/dokuwiki/doku.php?id=dapnetapisendcall).
 //!
 //! Currently the library focuses on reading data from the API.
-//! The only non-idempotent operation it supports is sending a new call/page/message.
-//!
-//! ## Example
-//! ```no_run
-//! use dapnet_api::{Client, OutgoingCall};
-//!
-//! #[tokio::main]
-//! async fn main() {
-//!     let client = Client::new("m0nxn", "my_super_secret_password");
-//!
-//!     client
-//!         .new_call(&OutgoingCall::new(
-//!             "M0NXN: this is a test".to_string(),
-//!             vec!["m0nxn".to_string()],
-//!             vec!["uk-all".to_string()],
-//!         ))
-//!         .await
-//!         .unwrap();
-//!
-//!     let calls = client.get_calls_by("m0nxn").await.unwrap();
-//!     println!("calls: {:?}", calls);
-//! }
-//! ```
+//! The only non-idempotent operation it supports is sending a new call/page/message and new rubric
+//! news item.
 
 mod client;
 mod error;
