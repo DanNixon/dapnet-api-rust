@@ -36,7 +36,7 @@ pub use crate::{
     client::Client,
     error::{Error, Result},
     types::{
-        Call, Callsign, Connection, News, Node, OutgoingCall, Rubric, Statistics, Transmitter,
-        TransmitterGroup,
+        Call, Callsign, Connection, News, Node, OutgoingCall, OutgoingNews, Rubric, Statistics,
+        Transmitter, TransmitterGroup,
     },
 };

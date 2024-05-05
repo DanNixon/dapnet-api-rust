@@ -12,7 +12,7 @@ pub use self::{
     calls::{Call, OutgoingCall},
     callsigns::Callsign,
     connection::Connection,
-    news::News,
+    news::{News, OutgoingNews},
     nodes::Node,
     rubrics::Rubric,
     statistics::Statistics,
