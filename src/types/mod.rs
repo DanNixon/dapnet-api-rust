@@ -8,12 +8,14 @@ mod statistics;
 mod transmitter_groups;
 mod transmitters;
 
-pub use calls::Call;
-pub use callsigns::Callsign;
-pub use connection::Connection;
-pub use news::News;
-pub use nodes::Node;
-pub use rubrics::Rubric;
-pub use statistics::Statistics;
-pub use transmitter_groups::TransmitterGroup;
-pub use transmitters::Transmitter;
+pub use self::{
+    calls::{Call, OutgoingCall},
+    callsigns::Callsign,
+    connection::Connection,
+    news::News,
+    nodes::Node,
+    rubrics::Rubric,
+    statistics::Statistics,
+    transmitter_groups::TransmitterGroup,
+    transmitters::Transmitter,
+};

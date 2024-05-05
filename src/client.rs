@@ -1,4 +1,6 @@
-use crate::{Call, Callsign, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup};
+use crate::{
+    Call, Callsign, News, Node, OutgoingCall, Rubric, Statistics, Transmitter, TransmitterGroup,
+};
 use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
 use url::Url;
@@ -106,12 +108,12 @@ impl Client {
     ///
     /// Example:
     /// ```no_run
-    /// # use dapnet_api::{Call, Client};
+    /// # use dapnet_api::{OutgoingCall, Client};
     /// # #[tokio::main]
     /// # async fn main() {
     /// # let client = Client::new("m0nxn", "my_super_secret_password");
     /// client
-    ///     .new_call(&Call::new(
+    ///     .new_call(&OutgoingCall::new(
     ///         "M0NXN: this is a test".to_string(),
     ///         vec!["m0nxn".to_string()],
     ///         vec!["uk-all".to_string()],
@@ -120,7 +122,7 @@ impl Client {
     ///     .unwrap();
     /// # }
     /// ```
-    pub async fn new_call(&self, call: &Call) -> crate::Result<()> {
+    pub async fn new_call(&self, call: &OutgoingCall) -> crate::Result<()> {
         self.post("calls", call).await
     }
 

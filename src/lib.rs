@@ -8,14 +8,14 @@
 //!
 //! ## Example
 //! ```no_run
-//! use dapnet_api::{Call, Client};
+//! use dapnet_api::{Client, OutgoingCall};
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let client = Client::new("m0nxn", "my_super_secret_password");
 //!
 //!     client
-//!         .new_call(&Call::new(
+//!         .new_call(&OutgoingCall::new(
 //!             "M0NXN: this is a test".to_string(),
 //!             vec!["m0nxn".to_string()],
 //!             vec!["uk-all".to_string()],
@@ -36,6 +36,7 @@ pub use crate::{
     client::Client,
     error::{Error, Result},
     types::{
-        Call, Callsign, Connection, News, Node, Rubric, Statistics, Transmitter, TransmitterGroup,
+        Call, Callsign, Connection, News, Node, OutgoingCall, Rubric, Statistics, Transmitter,
+        TransmitterGroup,
     },
 };
