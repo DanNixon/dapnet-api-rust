@@ -1,5 +1,6 @@
 use crate::{
-    Call, Callsign, News, Node, OutgoingCall, Rubric, Statistics, Transmitter, TransmitterGroup,
+    Call, Callsign, News, Node, OutgoingCall, OutgoingNews, Rubric, Statistics, Transmitter,
+    TransmitterGroup,
 };
 use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
@@ -183,12 +184,12 @@ impl Client {
     ///
     /// Example:
     /// ```no_run
-    /// # use dapnet_api::{Client, News};
+    /// # use dapnet_api::{Client, OutgoingNews};
     /// # #[tokio::main]
     /// # async fn main() {
     /// # let client = Client::new("m0nxn", "my_super_secret_password");
     /// client
-    ///     .new_news(&News::new(
+    ///     .new_news(&OutgoingNews::new(
     ///         "some_rubric_name".to_string(),
     ///         "M0NXN: this is a test".to_string(),
     ///     ))
@@ -196,7 +197,7 @@ impl Client {
     ///     .unwrap();
     /// # }
     /// ```
-    pub async fn new_news(&self, news: &News) -> crate::Result<()> {
+    pub async fn new_news(&self, news: &OutgoingNews) -> crate::Result<()> {
         self.post("news", news).await
     }
 }
