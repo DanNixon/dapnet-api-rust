@@ -9,11 +9,16 @@
 
 mod client;
 mod error;
+mod message_sanitization;
 mod types;
 
 pub use crate::{
     client::Client,
     error::{Error, Result},
+    message_sanitization::{
+        sanitize_message, MessageSanitizationOptions, MessageSanitizationOptionsBuilder,
+        MessageSanitizationOptionsBuilderError,
+    },
     types::{
         Call, Callsign, Connection, News, Node, OutgoingCall, OutgoingCallBuilder,
         OutgoingCallBuilderError, OutgoingNews, OutgoingNewsBuilder, OutgoingNewsBuilderError,
