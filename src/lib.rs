@@ -16,8 +16,9 @@ pub use crate::{
     client::Client,
     error::{Error, Result},
     message_sanitization::{
-        sanitize_message, MessageSanitizationNonAsciiPolicy, MessageSanitizationOptions,
+        MessageSanitizationNonAsciiPolicy, MessageSanitizationOptions,
         MessageSanitizationOptionsBuilder, MessageSanitizationOptionsBuilderError,
+        sanitize_message,
     },
     types::{
         Call, Callsign, Connection, News, Node, OutgoingCall, OutgoingCallBuilder,
